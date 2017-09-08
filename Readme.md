@@ -1,4 +1,5 @@
-#INSTALL
+
+# INSTALL
 
 On GCE/GKE and AWS, kube-up automatically configures the proper VM size for your master depending on the number of nodes in your cluster. On other providers, you will need to configure it manually. For reference, the sizes we use on GCE are
 
@@ -20,17 +21,17 @@ And the sizes we use on AWS are
 
 Note that these master node sizes are currently only set at cluster startup time, and are not adjusted if you later scale your cluster up or down (e.g. manually removing or adding nodes, or using a cluster autoscaler).
 
-##CLUSTER ADDONS:
+## CLUSTER ADDONS:
 limits on cpu and memory are based on 4-node cluster test. Need to scale up for larger clusters
      - influxes, grafana, kibana, (kubedns,  dnsmasq, sidecar) - need to scale cpu and memory
      - elasticsearch - increase replicas and a little bit of cpu and memory
      - FluentD - increase cpu and memory slightly as this is already a DaemonSet
 
-##INSTALL PARAMS
+## INSTALL PARAMS
      NUM_NODES: Number of nodes to create
      ALLOWED_NOTREADY_NODES - Number of nodes to not wait for
 
-##HA CLUSTER:
+## HA CLUSTER:
 > It is akin to wearing underwear, pants, a belt, suspenders, another pair of underwear, and another pair of pants 
 
 No kidding this is in the k8s docs
@@ -40,7 +41,7 @@ Easiest thing is to add master nodes to a single master cluster. The monitoring 
 
 If you are using monit, you should also install the monit daemon (apt-get install monit) and the monit-kubelet and monit-docker configs. On systemd systems you `systemctl enable kubelet` and `systemctl enable docker`.
 
-###Reliable Data Storage Layer
+### Reliable Data Storage Layer
 - Cluster ETCD:
      - On each master node copy etcd.yaml in /etc/kubernetes/manifests/etcd.yaml
      - Check if all etcd nodes are part of cluster using `etcdctl member list`
@@ -173,7 +174,7 @@ No Loadbalancing and no IP
  - normal users: managed by some 3rd party
  - service accounts: users managed by k8s api, bound to a namespace, creds are stored in secrets and mounted into pods
 
-##kube-apiserver
+## kube-apiserver
 
 - `--client-ca-file`: x509 certs, user is /CN=someuser groups using /O=somegroup1/O=somegroup2
 - `--token-auth-file`: static tokens , no expiration, file changes requires restart of api server, The token file is a csv file with a minimum of 3 columns: token, user name, user uid, followed by optional group names. Note, if you have more than one group the column must be double quoted. http headers require the following header `Authorization: Bearer TOKEN`
@@ -184,9 +185,9 @@ No Loadbalancing and no IP
 - authenticating proxy: The API server can be configured to identify users from request header values, such as `X-Remote-User`. It is designed for use in combination with an authenticating proxy, which sets the request header value.
 	- `--requestheader-username-headers`: Header names to check, in order, for the user identity. The first header containing a value is used as the username.
 
-###Securing CONTROL PLANE
+### Securing CONTROL PLANE
 
-####APISERVER
+#### APISERVER
 
 Trusted CA
 
@@ -229,7 +230,7 @@ Service account key
 	used to verify ServiceAccount tokens. If unspecified, --tls-private-key-file is used. The specified file can
 	contain multiple keys, and the flag can be specified multiple times with different files.
   
-####ETCD
+#### ETCD
 
 [https://coreos.com/etcd/docs/latest/op-guide/security.html](https://coreos.com/etcd/docs/latest/op-guide/security.html)
 
@@ -286,7 +287,7 @@ Multiple admission controllers can be configured. Each is called in order. Unlik
 
 ## Cluster Communication
 
-###apiserver to kubelet
+### apiserver to kubelet
 
 By default, the apiserver does not verify the kubelet’s serving certificate, which makes the connection subject to man-in-the-middle attacks, and unsafe to run over untrusted and/or public networks.
 
