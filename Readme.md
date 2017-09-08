@@ -35,7 +35,7 @@ limits on cpu and memory are based on 4-node cluster test. Need to scale up for 
 > It is akin to wearing underwear, pants, a belt, suspenders, another pair of underwear, and another pair of pants 
 
 No kidding this is in the k8s docs
-Easiest thing is to add master nodes to a single master cluster. The monitoring flow looks like this...
+Easiest thing is to add master nodes to a single master cluster. The monitoring flow looks like the following:
 
 	systemd/monit -- (monitors) --> kubelet -- (monitors) --> master processes
 
