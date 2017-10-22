@@ -1,6 +1,5 @@
-
 # INSTALL
-
+  
 On GCE/GKE and AWS, kube-up automatically configures the proper VM size for your master depending on the number of nodes in your cluster. On other providers, you will need to configure it manually. For reference, the sizes we use on GCE are
 
 - 1-5 nodes: n1-standard-1
